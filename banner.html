@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css手动轮播图</title>
+    <style>
+        body{
+            background-color: #57606f;
+        }
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 400px;
+            background-color:#747d8c ;
+            transform: translate(-50%, -50%);
+            border-radius: 5px;
+            box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* ---- 主内容  --- */
+        .slide-inner-wrap {
+            position: relative;
+            width: 300px;
+            height: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .slide-inner {
+            position: absolute;
+            width: 300px;
+            height: 100%;
+            transition: all 0.6s linear;
+        }
+
+        .slide-inner div {
+            position: absolute;
+            float: left;
+            width: 300px;
+            height: 100%;
+        }
+
+        .slide-inner-01 {
+            left: 0;
+            background-color: #dfe4ea;
+        }
+
+        .slide-inner-02 {
+            left: 300px;
+            background-color: #ced6e0;
+        }
+
+        .slide-inner-03 {
+            left: 600px;
+            background-color: #d2dae2;
+        }
+
+        .slide-inner-04 {
+            left: 900px;
+            background-color: #dfe4ea;
+        }
+
+        #slide-item-01:checked~.slide-inner-wrap .slide-inner {
+            left: 0;
+        }
+
+        #slide-item-02:checked~.slide-inner-wrap .slide-inner {
+            left: -300px;
+        }
+
+        #slide-item-03:checked~.slide-inner-wrap .slide-inner {
+            left: -600px;
+        }
+
+        #slide-item-04:checked~.slide-inner-wrap .slide-inner {
+            left: -900px;
+        }
+
+        /* --  左右按钮-- */
+
+        .pre-btn label,
+        .next-wrap label {
+            display: none;
+            position: absolute;
+            top: 50%;
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+            transform: translateY(-50%);
+            opacity: 0.5;
+            z-index: 999;
+            transition: all 0.2s;
+        }
+
+        .pre-btn label:hover,
+        .next-wrap label:hover {
+            opacity: 1;
+        }
+
+        .pre-btn label {
+            left: 50%;
+            margin-left: -180px;
+            border-left: none;
+            border-right: 20px solid #a4b0be;
+        }
+
+        .next-wrap label {
+            right: 50%;
+            margin-right: -180px;
+            border-left: 20px solid #a4b0be;
+            border-right: none;
+        }
+
+        #slide-item-01:checked~.pre-wrap label:nth-child(4),
+        #slide-item-02:checked~.pre-wrap label:nth-child(1),
+        #slide-item-03:checked~.pre-wrap label:nth-child(2),
+        #slide-item-04:checked~.pre-wrap label:nth-child(3) {
+            display: block;
+        }
+
+        #slide-item-01:checked~.next-wrap label:nth-child(2),
+        #slide-item-02:checked~.next-wrap label:nth-child(3),
+        #slide-item-03:checked~.next-wrap label:nth-child(4),
+        #slide-item-04:checked~.next-wrap label:nth-child(1) {
+            display: block;
+        }
+
+        /* ----  指示器 ---- */
+        .indicator {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            z-index: 999;
+        }
+
+        .indicator label {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0.4;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        #slide-item-01:checked~.indicator label:nth-child(1),
+        #slide-item-02:checked~.indicator label:nth-child(2),
+        #slide-item-03:checked~.indicator label:nth-child(3),
+        #slide-item-04:checked~.indicator label:nth-child(4) {
+            background-color: #a4b0be;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <diV class="container">
+        <input id="slide-item-01" checked="checked" type="radio" name="game-slide">
+        <input id="slide-item-02" type="radio" name="game-slide">
+        <input id="slide-item-03" type="radio" name="game-slide">
+        <input id="slide-item-04" type="radio" name="game-slide">
+
+
+        <div class="indicator">
+            <label for="slide-item-01"></label>
+            <label for="slide-item-02"></label>
+            <label for="slide-item-03"></label>
+            <label for="slide-item-04"></label>
+        </div>
+
+        <div class="next-wrap">
+            <label for="slide-item-01">
+                <div class="next-btn"></div>
+            </label>
+            <label for="slide-item-02">
+                <div class="next-btn"></div>
+            </label>
+            <label for="slide-item-03">
+                <div class="next-btn"></div>
+            </label>
+            <label for="slide-item-04">
+                <div class="next-btn"></div>
+            </label>
+        </div>
+        <div class="pre-wrap">
+            <div class="pre-btn">
+                <label for="slide-item-01"></label>
+                <label for="slide-item-02"></label>
+                <label for="slide-item-03"></label>
+                <label for="slide-item-04"></label>
+            </div>
+        </div>
+        <div class="slide-inner-wrap">
+            <div class="slide-inner">
+                <div class="slide-inner-01">111111111111111</div>
+                <div class="slide-inner-02">222222222222222</div>
+                <div class="slide-inner-03">333333333333333</div>
+                <div class="slide-inner-04">444444444444444</div>
+            </div>
+        </diV>
+    </div>
+</body>
+
+</html>
