@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css自动轮播图</title>
+</head>
+<style>
+    body {
+        background-color: #57606f;
+    }
+
+    .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 400px;
+        height: 400px;
+        background-color: #747d8c;
+        transform: translate(-50%, -50%);
+        border-radius: 5px;
+        box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .slide-inner-wrap {
+        position: relative;
+        width: 300px;
+        height: 100%;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+
+    .slide-inner {
+        position: absolute;
+        width: 300px;
+        height: 100%;
+        text-align: center;
+        color: #7f8c8d;
+        line-height: 300px;
+        animation: carousel linear 10s infinite 0s normal;
+    }
+
+    .slide-inner div {
+        position: absolute;
+        float: left;
+        width: 300px;
+        height: 100%;
+    }
+
+    .slide-inner-01 {
+        left: 0;
+        background-color: #dfe4ea;
+    }
+
+    .slide-inner-02 {
+        left: 300px;
+        background-color: #ced6e0;
+    }
+
+    .slide-inner-03 {
+        left: 600px;
+        background-color: #d2dae2;
+    }
+
+    .slide-inner-04 {
+        left: 900px;
+        background-color: #dfe4ea;
+    }
+
+    @keyframes carousel {
+        0% {
+            left: 0;
+        }
+
+        20% {
+            left: 0;
+        }
+
+        25% {
+            left: -300px;
+        }
+
+        45% {
+            left: -300px;
+        }
+
+        50% {
+            left: -600px;
+        }
+
+        70% {
+            left: -600px;
+        }
+
+        75% {
+            left: -900px;
+        }
+
+        95% {
+            left: -900px;
+        }
+
+        100% {
+            left: 0;
+        }
+    }
+</style>
+
+<body>
+    <diV class="container">
+        <div class="slide-inner-wrap">
+            <div class="slide-inner">
+                <div class="slide-inner-01">
+                    <h1>一</h1>
+                </div>
+                <div class="slide-inner-02">
+                    <h1>二</h1>
+                </div>
+                <div class="slide-inner-03">
+                    <h1>三</h1>
+                </div>
+                <div class="slide-inner-04">
+                    <h1>四</h1>
+                </div>
+            </div>
+        </diV>
+    </div>
+</body>
+
+</html>
