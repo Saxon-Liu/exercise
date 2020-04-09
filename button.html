@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ios按钮</title>
+    <style>
+        :root {
+            /* 按钮宽度 */
+            --button-width: 400px;
+            /* 按钮高度 */
+            --button-height: 200px;
+            /* 内圆直径 */
+            --toggle-diameter: 160px;
+            /* 内圆与外边距离 */
+            --button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter))/2);
+            /* 阴影大小 */
+            --toggle-shadow-offset: 10px;
+            /* activ下内圆宽度 */
+            --toggle-width: 200px;
+            /* 灰色 */
+            --color-grey: #e9e9e9;
+            /* 深灰色 */
+            --color-dark-grey: #393930;
+            /* 绿色 */
+            --color-green: #30d158;
+        }
+
+        div {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: var(--button-width);
+            height: var(--button-height);
+            background-color: var(--color-grey);
+            transform: translate(-50%, -50%);
+            border-radius: calc(var(--button-height)/2);
+            transition: all 0.3s ease-in-out;
+        }
+
+        div::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: var(--button-toggle-offset);
+            left: var(--button-toggle-offset);
+            width: var(--toggle-diameter);
+            height: var(--toggle-diameter);
+            background-color: #fff;
+            border-radius: calc(var(--toggle-diameter)/2);
+            box-shadow: var(--toggle-shadow-offset) 0 calc(var(--toggle-shadow-offset)*4) rgba(0, 0, 0, .1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        #toggle:checked+div {
+            background-color: var(--color-green);
+        }
+
+        #toggle:checked+div::after {
+            left: calc(var(--button-width) - var(--toggle-diameter) - var(--button-toggle-offset));
+            /* 阴影相反 */
+            box-shadow: calc(var(--toggle-shadow-offset)*-1) 0 calc(var(--toggle-shadow-offset)*4) rgba(0, 0, 0, .1);
+        }
+
+        #toggle:active+div::after {
+            width: var(--toggle-width);
+        }
+
+        #toggle:checked:active+div::after {
+            left: calc(var(--button-width) - var(--toggle-width) - var(--button-toggle-offset))
+        }
+
+        /* 暗色模式检测 */
+        @media(prefers-color-scheme:dark) {
+            body {
+                background-color: #1c1c1e;
+            }
+
+            div {
+                background-color: var(--color-dark-grey);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <label>
+        <input type="checkbox" id="toggle">
+        <div></div>
+    </label>
+</body>
+
+</html>
