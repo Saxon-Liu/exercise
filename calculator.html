@@ -45,8 +45,8 @@
         border-radius: calc(var(--button-height) / 2);
         background: linear-gradient(
           135deg,
-          rgba(230, 230, 230, 1) 0%,
-          rgba(246, 246, 246, 1) 100%
+          rgba(230, 230, 230, 1),
+          rgba(246, 246, 246, 1)
         );
         font-size: 24px;
         font-family: Arial, Helvetica, sans-serif;
@@ -84,6 +84,28 @@
         <button style="grid-area: percent;" @click="calculatePercentage">
           %
         </button>
+        <button style="grid-area: equal;" @click="calculate">=</button>
+        <!-- 循环渲染相同方法的按钮 -->
+        <button
+          v-for="item in button"
+          :style="{gridArea: item.name}"
+          @click="append(item.value)"
+        >
+          {{item.value}}
+        </button>
+      </div>
+      <!-- <div class="calculator">
+        <div class="result" style="grid-area: result;">
+          {{ equation }}
+        </div>
+
+        <button style="grid-area: ac;" @click="clear">AC</button>
+        <button style="grid-area: plus-minus;" @click="calculateToggle">
+          ±
+        </button>
+        <button style="grid-area: percent;" @click="calculatePercentage">
+          %
+        </button>
         <button style="grid-area: add;" @click="append('+')">+</button>
         <button style="grid-area: subtract;" @click="append('-')">-</button>
         <button style="grid-area: multiply;" @click="append('×')">×</button>
@@ -102,25 +124,44 @@
         <button style="grid-area: number-0;" @click="append(0)">0</button>
 
         <button style="grid-area: dot;" @click="append('.')">.</button>
-      </div>
+      </div> -->
     </div>
     <script>
       new Vue({
         el: "#app",
         data: {
           equation: "0",
+          //
           isDecimalAdded: false,
           isOperatorAdded: false,
           isStarted: false,
+          button: [
+            { name: "add", value: "+" },
+            { name: "subtract", value: "-" },
+            { name: "multiply", value: "×" },
+            { name: "divide", value: "÷" },
+            { name: "number-1", value: 1 },
+            { name: "number-2", value: 2 },
+            { name: "number-3", value: 3 },
+            { name: "number-4", value: 4 },
+            { name: "number-5", value: 5 },
+            { name: "number-6", value: 6 },
+            { name: "number-7", value: 7 },
+            { name: "number-8", value: 8 },
+            { name: "number-9", value: 9 },
+            { name: "number-0", value: 0 },
+            { name: "dot", value: "." },
+          ],
         },
         methods: {
-          // Check if the character is + / - / × / ÷
+          // 检测是否为运算符
           isOperator(character) {
+            console.log(character);
             return ["+", "-", "×", "÷"].indexOf(character) > -1;
           },
           // When pressed Operators or Numbers
           append(character) {
-            // Start
+            //
             if (this.equation === "0" && !this.isOperator(character)) {
               if (character === ".") {
                 this.equation += "" + character;
@@ -133,7 +174,7 @@
               return;
             }
 
-            // If Number
+            //
             if (!this.isOperator(character)) {
               if (character === "." && this.isDecimalAdded) {
                 return;
@@ -149,14 +190,15 @@
               this.equation += "" + character;
             }
 
-            // Added Operator
+            //添加运算符
             if (this.isOperator(character) && !this.isOperatorAdded) {
               this.equation += "" + character;
               this.isDecimalAdded = false;
               this.isOperatorAdded = true;
             }
           },
-          // When pressed '='
+
+          // ＝
           calculate() {
             let result = this.equation
               .replace(new RegExp("×", "g"), "*")
@@ -166,7 +208,7 @@
             this.isDecimalAdded = false;
             this.isOperatorAdded = false;
           },
-          // When pressed '+/-'
+          // ±
           calculateToggle() {
             if (this.isOperatorAdded || !this.isStarted) {
               return;
@@ -175,7 +217,7 @@
             this.equation = this.equation + "* -1";
             this.calculate();
           },
-          // When pressed '%'
+          // %
           calculatePercentage() {
             if (this.isOperatorAdded || !this.isStarted) {
               return;
@@ -184,13 +226,49 @@
             this.equation = this.equation + "* 0.01";
             this.calculate();
           },
-          // When pressed 'AC'
+          // AC
           clear() {
             this.equation = "0";
             this.isDecimalAdded = false;
             this.isOperatorAdded = false;
             this.isStarted = false;
           },
+        },
+        // 生命周期函数
+        created() {
+          var _this = this;
+          console.log(this);
+          // 键盘点击事件
+          document.onkeydown = function (e) {
+            let key = window.event.keyCode;
+            // 删除 esc 清空result
+            if (key == 8 || key == 27) {
+              console.log(_this);
+              _this.clear();
+              // 数字0~9
+            } else if (key > 47 && key < 58) {
+              let num = key - 48;
+              _this.append(num);
+              // 小键盘数字
+            } else if (key > 95 && key < 106) {
+              let num = key - 96;
+              _this.append(num);
+              // 小数点
+            } else if (key == 190 || key == 110) {
+              _this.append(".");
+              // 运算符
+            } else if (key == 13) {
+              _this.calculate();
+            } else if (key == 106) {
+              _this.append("×");
+            } else if (key == 107) {
+              _this.append("+");
+            } else if (key == 109) {
+              _this.append("-");
+            } else if (key == 111) {
+              _this.append("÷");
+            }
+          };
         },
       });
     </script>
